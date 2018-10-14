@@ -5,6 +5,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 var postBlog = require('./router/postBlog');
 var getList = require('./router/getlist');
+var getBlogDetail = require('./router/getBlogDetail');
 
 
 
