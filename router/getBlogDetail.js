@@ -1,4 +1,4 @@
-var index = require('../index');
+var pool = require('../index');
 var app = require('../app');
 
 let checkList;
@@ -20,16 +20,14 @@ new Promise((resolve,reject)=>{
         }else{
             checkList = 'SELECT * FROM nodeList';
         }
-        index.connection.query(checkList,(err,result)=>{
-            if(!err){
-                res.setHeader("Access-Control-Allow-Origin", "*");
-                res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-                res.setHeader("Access-Control-Allow-Methods", "GET, POST,DELETE, OPTIONS");
-
-                res.send(result);
-            }else{
-                console.log(err)
-            }
+        pool.query(checkList, [], (result, fields) => {
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            res.setHeader("Access-Control-Allow-Methods", "GET, POST,DELETE, OPTIONS");
+            res.send({
+            	error_code:200,
+            	successObj:result[0]
+            });
         })
     })
 }).then((reject)=>{
